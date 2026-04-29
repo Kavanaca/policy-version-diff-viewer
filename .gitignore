@@ -1,0 +1,4 @@
+.env
+*.env
+ai-service/.env
+backend/.env
