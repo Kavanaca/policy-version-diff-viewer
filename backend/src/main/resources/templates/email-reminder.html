@@ -1,0 +1,33 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Policy Reminder</title>
+  </head>
+  <body style="font-family: Arial, sans-serif; color: #333">
+    <div style="max-width: 600px; margin: auto; padding: 24px">
+      <h2 style="color: #1b4f8a">Policy Review Reminder</h2>
+      <p>Hello <span th:text="${name}">Admin</span>,</p>
+      <p>This policy requires your attention:</p>
+      <div
+        style="
+          background: #f4f6f9;
+          padding: 16px;
+          border-radius: 8px;
+          margin: 16px 0;
+        "
+      >
+        <strong th:text="${policyTitle}"> Policy Title</strong><br />
+        <span style="color: #666" th:text="${'Status: ' + status}"> Status</span
+        ><br />
+        <span style="color: #666" th:text="${'Version: ' + version}">
+          Version</span
+        >
+      </div>
+      <p>Please log in to review and update it.</p>
+      <p style="color: #999; font-size: 12px">
+        Automated message from Tool-91.
+      </p>
+    </div>
+  </body>
+</html>

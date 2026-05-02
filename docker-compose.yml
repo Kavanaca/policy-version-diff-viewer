@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+
+  postgres:
+    image: postgres:15
+    container_name: tool91-postgres
+    environment:
+      POSTGRES_DB: tool91db
+      POSTGRES_USER: tool91user
+      POSTGRES_PASSWORD: tool91pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL",
+        "pg_isready -U tool91user -d tool91db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7
+    container_name: tool91-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: tool91-backend
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/tool91db
+      DB_USERNAME: tool91user
+      DB_PASSWORD: tool91pass
+      JWT_SECRET: mySecretKey123456789012345678901234567890
+      JWT_EXPIRATION: 86400000
+      MAIL_HOST: smtp.gmail.com
+      MAIL_PORT: 587
+      MAIL_USERNAME: kavanaca2005@gmail.com
+      MAIL_PASSWORD: talzjvzmcbywlpkx
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    container_name: tool91-ai
+    ports:
+      - "5000:5000"
+    healthcheck:
+      test: ["CMD", "curl", "-f",
+        "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: tool91-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
