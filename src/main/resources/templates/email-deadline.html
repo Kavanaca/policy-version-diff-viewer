@@ -1,0 +1,34 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Deadline Alert</title>
+  </head>
+  <body style="font-family: Arial, sans-serif; color: #333">
+    <div style="max-width: 600px; margin: auto; padding: 24px">
+      <h2 style="color: #c0392b">⚠ Policy Deadline Alert</h2>
+      <p>Hello <span th:text="${name}">Admin</span>,</p>
+      <p>This policy is overdue and needs immediate action:</p>
+      <div
+        style="
+          background: #fef9f0;
+          border-left: 4px solid #e67e22;
+          padding: 16px;
+          margin: 16px 0;
+        "
+      >
+        <strong th:text="${policyTitle}"> Policy Title</strong><br />
+        <span style="color: #e67e22" th:text="${'Status: ' + status}">
+          Status</span
+        ><br />
+        <span style="color: #e67e22" th:text="${'Version: ' + version}">
+          Version</span
+        >
+      </div>
+      <p>Please log in immediately to review this policy.</p>
+      <p style="color: #999; font-size: 12px">
+        Automated message from Tool-91.
+      </p>
+    </div>
+  </body>
+</html>
