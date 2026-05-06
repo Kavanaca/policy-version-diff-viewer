@@ -5,6 +5,7 @@ import com.internship.tool.exception.PolicyNotFoundException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+//Exception
 class ExceptionTest {
 
     @Test
